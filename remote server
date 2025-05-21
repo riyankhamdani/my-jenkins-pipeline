@@ -1,0 +1,19 @@
+pipeline {
+  agent any
+
+  stages {
+    stage('Clone GitHub') {
+      steps {
+        git url: 'https://github.com/riyankhamdani/my-jenkins-pipeline', branch: 'main'
+      }
+    }
+
+    stage('Deploy ke Remote CentOS') {
+      steps {
+        sshagent(['riyan-ssh']) {
+          sh 'scp -r * riyan@192.168.106.142:/home/riyan/app'
+        }
+      }
+    }
+  }
+}
